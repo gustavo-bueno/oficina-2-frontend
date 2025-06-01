@@ -34,7 +34,7 @@ const ResetPassword = () => {
       const { success } = await recoverPassword(data.email);
       if (success) {
         toast.success(
-          "Senha alterado com sucesso! Você será redirecionado para a tela de Login em 3 segundos",
+          "Email enviado com sucesso! Verifique sua caixa de entrada para obter o código de verificação.",
         );
         router.push(`/login/validate-password?email=${data.email}`);
       } else {
