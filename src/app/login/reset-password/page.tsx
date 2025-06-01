@@ -1,33 +1,54 @@
 "use client";
-
+ 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+ 
+import { toast } from "react-toastify";
 import Input from "@/app/components/Input";
 import Button from "@/app/components/Button";
 import Link from "next/link";
+import { recoverPassword } from "@/app/services/auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+ 
 const resetPasswordSchema = yup.object().shape({
   email: yup.string().email("Email inválido").required("Campo obrigatório"),
 });
-
+ 
 type ResetPasswordForm = {
   email: string;
 };
-
+ 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const resetPasswordForm = useForm<ResetPasswordForm>({
     resolver: yupResolver(resetPasswordSchema),
   });
   const { errors } = resetPasswordForm.formState;
-
+  const router = useRouter();
+ 
   const onSubmit = async (data: ResetPasswordForm) => {
-    console.log(data)
+    setLoading(true);
+    try {
+      const { success } = await recoverPassword(data.email);
+      if (success) {
+        toast.success(
+          "Senha alterado com sucesso! Você será redirecionado para a tela de Login em 3 segundos",
+        );
+        router.push(`/login/validate-password?email=${data.email}`);
+      } else {
+        throw Error("Erro ao mandar email");
+      }
+    } catch {
+      toast.error(
+        "Não possível enviar o email de recuperação. Verique o email ou tente novamente mais tarde.",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
-
+ 
   return (
     <FormProvider {...resetPasswordForm}>
       <section className="flex justify-center pt-[64px]">
@@ -61,5 +82,6 @@ const ResetPassword = () => {
     </FormProvider>
   );
 };
-
+ 
 export default ResetPassword;
+ 
