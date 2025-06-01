@@ -1,14 +1,16 @@
 "use client";
-
+ 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Link from "next/link";
 import { useState } from "react";
-
+ 
 const loginSchema = yup.object().shape({
   email: yup.string().email("Email inválido").required("Campo obrigatório"),
   password: yup
@@ -16,25 +18,37 @@ const loginSchema = yup.object().shape({
     .min(4, "Mínimo de 8 caracteres")
     .required("Campo obrigatório"),
 });
-
+ 
 type LoginForm = {
   email: string;
   password: string;
 };
-
+ 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const loginForm = useForm<LoginForm>({
     resolver: yupResolver(loginSchema),
   });
   const router = useRouter();
-
+ 
   const { errors } = loginForm.formState;
-
+ 
   const onSubmit = async (data: LoginForm) => {
-    console.log(data)
+    setLoading(true);
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
+ 
+    if (result?.error) {
+      toast.error("Erro ao logar. Verifique as credenciais e tente novamente.");
+    } else {
+      router.push("/participantes");
+    }
+    setLoading(false);
   };
-
+ 
   return (
     <FormProvider {...loginForm}>
       <section className="flex justify-center pt-[64px]">
@@ -75,5 +89,5 @@ const Login = () => {
     </FormProvider>
   );
 };
-
+ 
 export default Login;

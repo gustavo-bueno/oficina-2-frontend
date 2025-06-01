@@ -1,13 +1,18 @@
 import ellpLogo from "@/app/assets/img/ellp-logo.png";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ToastContainer } from "react-toastify";
-
+ 
 export default async function LoginLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
+  const session = await getServerSession(authOptions);
+  if (session) redirect("/participantes");
+ 
   return (
     <>
       <main className="bg-white h-screen w-screen flex">
