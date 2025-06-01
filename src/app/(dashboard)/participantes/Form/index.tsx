@@ -16,8 +16,22 @@ const Form = ({ initialParticipants }: FormProps) => {
   const [showCreateParticipantModal, setShowCreateParticipantModal] =
     useState(false);
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
+
+  const token = session?.user.token || "";
 
   const deleteUser = async (id: string) => {
+    try {
+      const result = await deleteParticipant(id, token);
+      if (result.success) {
+        toast.success("Mentora apagada com sucesso!");
+        setParticipants((currentParticipants) =>
+          currentParticipants.filter((participant) => participant._id !== id),
+        );
+      }
+    } catch {
+      toast.error("Erro ao apagar mentora.");
+    }
   };
 
   return (
