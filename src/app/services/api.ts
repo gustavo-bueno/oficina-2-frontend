@@ -18,6 +18,7 @@ type ApiProps = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+
   
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
       method,
