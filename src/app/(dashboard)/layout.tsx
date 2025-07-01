@@ -11,7 +11,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="flex bg-background items-start">
       <Sidebar />
-      <section className="max-w-[1280px] w-full p-[16px] mx-auto ">
+      <section className="w-full lg:max-w-[1280px] lg:mx-auto p-4 lg:p-[16px]">
         {children}
       </section>
       <ToastContainer />

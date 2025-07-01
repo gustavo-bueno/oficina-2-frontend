@@ -51,13 +51,13 @@ const Login = () => {
  
   return (
     <FormProvider {...loginForm}>
-      <section className="flex justify-center pt-[64px]">
+      <section className="flex justify-center w-full">
         <form
-          className="w-full max-w-[600px]"
+          className="w-full max-w-[600px] px-4"
           onSubmit={loginForm.handleSubmit(onSubmit)}
         >
-          <h1 className="text-[42px] font-bold text-black">Login</h1>
-          <p className="text-[18px] mt-4 mb-10 text-black">
+          <h1 className="text-[32px] lg:text-[42px] font-bold text-black">Login</h1>
+          <p className="text-[16px] lg:text-[18px] mt-4 mb-8 lg:mb-10 text-black">
             Bem vinda (o) de volta! :)
           </p>
           <div className="flex flex-col w-full gap-5">
@@ -72,13 +72,13 @@ const Login = () => {
               type="password"
               error={errors.password && errors.password.message}
             />
-            <div className="flex items-center justify-between">
-              <Button loading={loading} className="w-[280px]">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <Button loading={loading} className="w-full sm:w-[280px]">
                 Entrar
               </Button>
               <Link
                 href="/login/reset-password"
-                className="font-bold text-secondary"
+                className="font-bold text-secondary text-center sm:text-left"
               >
                 Esqueci minha senha
               </Link>

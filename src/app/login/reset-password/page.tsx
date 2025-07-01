@@ -51,15 +51,15 @@ const ResetPassword = () => {
  
   return (
     <FormProvider {...resetPasswordForm}>
-      <section className="flex justify-center pt-[64px]">
+      <section className="flex justify-center w-full">
         <form
-          className="w-full max-w-[600px]"
+          className="w-full max-w-[600px] px-4"
           onSubmit={resetPasswordForm.handleSubmit(onSubmit)}
         >
-          <h1 className="text-[42px] font-bold text-black">
+          <h1 className="text-[32px] lg:text-[42px] font-bold text-black">
             Esqueci minha senha
           </h1>
-          <p className="text-[18px] mt-4 mb-10 text-black">
+          <p className="text-[16px] lg:text-[18px] mt-4 mb-8 lg:mb-10 text-black">
             Digite o email que você tem cadastrado aqui.
           </p>
           <div className="flex flex-col w-full gap-5">
@@ -68,11 +68,11 @@ const ResetPassword = () => {
               name="email"
               error={errors.email && errors.email.message}
             />
-            <div className="flex items-center justify-between">
-              <Button loading={loading} className="w-[300px]">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <Button loading={loading} className="w-full sm:w-[300px]">
                 Recuperar senha
               </Button>
-              <Link href="/login" className="font-bold text-primary">
+              <Link href="/login" className="font-bold text-primary text-center sm:text-left">
                 Voltar ao login
               </Link>
             </div>

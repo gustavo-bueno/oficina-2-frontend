@@ -1,4 +1,3 @@
-
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { tv } from 'tailwind-variants'
@@ -8,6 +7,7 @@ type SidebarLinkProps = {
   children: string
   active: boolean
   icon: ReactNode
+  onClick?: () => void
 } 
 
 const sidebarLink = tv({
@@ -24,11 +24,12 @@ const SidebarLink = ({
  href,
  children,
  icon,
- active
+ active,
+ onClick
 }: SidebarLinkProps) => {
 
   return (
-    <Link href={href} className={sidebarLink({ status: active ? 'active' : 'unactive' })}>
+    <Link href={href} className={sidebarLink({ status: active ? 'active' : 'unactive' })} onClick={onClick}>
       {icon}
       {children}
     </Link>

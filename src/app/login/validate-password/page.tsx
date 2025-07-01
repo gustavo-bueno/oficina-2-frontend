@@ -67,15 +67,15 @@ const ResetPassword = () => {
  
   return (
     <FormProvider {...validatePasswordForm}>
-      <section className="flex justify-center pt-[64px]">
+      <section className="flex justify-center w-full">
         <form
-          className="w-full max-w-[600px]"
+          className="w-full max-w-[600px] px-4"
           onSubmit={validatePasswordForm.handleSubmit(onSubmit)}
         >
-          <h1 className="text-[42px] font-bold text-black">
+          <h1 className="text-[32px] lg:text-[42px] font-bold text-black">
             Crie sua senha nova
           </h1>
-          <p className="text-[18px] mt-4 mb-10 text-black">
+          <p className="text-[16px] lg:text-[18px] mt-4 mb-8 lg:mb-10 text-black">
             Utilize o código que você recebeu no seu e-mail para atualizar a sua
             senha.
           </p>
@@ -88,15 +88,17 @@ const ResetPassword = () => {
             <Input
               placeholder="Senha"
               name="password"
+              type="password"
               error={errors.password && errors.password.message}
             />
             <Input
               placeholder="Confirmar senha"
               name="confirmPassword"
+              type="password"
               error={errors.confirmPassword && errors.confirmPassword.message}
             />
-            <div className="flex items-center justify-between">
-              <Button loading={loading} className="w-[300px]">
+            <div className="flex justify-center sm:justify-start">
+              <Button loading={loading} className="w-full sm:w-[300px]">
                 Alterar senha
               </Button>
             </div>

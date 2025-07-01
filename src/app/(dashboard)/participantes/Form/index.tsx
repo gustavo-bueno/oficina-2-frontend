@@ -53,12 +53,12 @@ const Form = ({ initialParticipants }: FormProps) => {
 
   return (
     <>
-      <div className="pt-10 max-w-[1000px] mx-auto">
-        <div className="flex items-center justify-between">
-          <h1 className="text-black text-[42px] font-bold">Participantes</h1>
+      <div className="pt-10 max-w-[1000px] min-h-screen mx-auto px-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <h1 className="text-black text-[32px] sm:text-[42px] font-bold">Participantes</h1>
           <button
             onClick={() => setShowCreateParticipantModal(true)}
-            className="text-primary text-[22px] font-bold border-none p-4"
+            className="text-primary text-[18px] sm:text-[22px] font-bold border-none p-4 self-start sm:self-auto"
             data-testid="open-create-participant-modal"
           >
             Criar participante
@@ -69,7 +69,7 @@ const Form = ({ initialParticipants }: FormProps) => {
             <LoadingSpinner />
           </div>
         ) : (
-          <ul className="grid gap-6 mt-8">
+          <ul className="grid gap-4 sm:gap-6 mt-8">
             {participants.map((participant) => (
               <ParticipantListItem
                 key={participant._id}

@@ -42,11 +42,11 @@ const Certificados = () => {
   return (
     <div className="w-full flex justify-center bg-gray-50 pt-10 min-h-screen">
       <div className="w-full max-w-[1000px] mx-auto px-4">
-        <div className="flex items-center justify-between w-full mb-8">
-          <h1 className="text-black text-[42px] font-bold">Certificados</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full mb-8">
+          <h1 className="text-black text-[32px] sm:text-[42px] font-bold">Certificados</h1>
         </div>
         <FormProvider {...form}>
-          <form className="flex flex-col gap-8 w-full" onSubmit={handleSubmit(onSubmit)}>
+          <form className="flex flex-col gap-6 sm:gap-8 w-full" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <select
                 {...register("nome", { required: "Selecione um participante" })}
@@ -64,15 +64,15 @@ const Certificados = () => {
               </select>
               {errors.nome && <p className="text-red-600 mt-2">{errors.nome.message as string}</p>}
             </div>
-            <div className="flex gap-6 w-full">
-              <div className="w-2/3">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full">
+              <div className="w-full sm:w-2/3">
                 <Input
                   name="projeto"
                   placeholder="Projeto"
                   error={errors.projeto && (errors.projeto.message as string)}
                 />
               </div>
-              <div className="w-1/3">
+              <div className="w-full sm:w-1/3">
                 <Input
                   name="horas"
                   placeholder="Horas"
@@ -82,7 +82,7 @@ const Certificados = () => {
               </div>
             </div>
             <div className="flex justify-end w-full">
-              <Button loading={loading} className="mt-4 max-w-[300px]">
+              <Button loading={loading} className="mt-4 w-full sm:max-w-[300px]">
                 Gerar certificado
               </Button>
             </div>

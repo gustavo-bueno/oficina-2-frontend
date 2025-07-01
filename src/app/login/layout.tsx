@@ -15,10 +15,18 @@ export default async function LoginLayout({
  
   return (
     <>
-      <main className="bg-white h-screen w-screen flex">
-        <div className="w-[50%]">{children}</div>
-        <section className="min-h-screen w-[50%] flex items-center justify-center bg-[#10B0FB]/30">
-          <Image src={ellpLogo} alt="ELLP Logo" height={500} width={500} />
+      <main className="bg-white min-h-screen w-screen flex flex-col lg:flex-row">
+        <div className="w-full lg:w-[50%] flex-1 flex lg:pt-[64px] justify-center p-4 lg:p-8">
+          {children}
+        </div>
+        <section className="w-full lg:w-[50%] sm:min-h-[300px] lg:min-h-[500px] flex items-center justify-center bg-[#10B0FB]/30 p-4 lg:p-8">
+          <Image 
+            src={ellpLogo} 
+            alt="ELLP Logo" 
+            height={500} 
+            width={500} 
+            className="w-auto h-auto sm:max-w-[300px] lg:w-full lg:max-w-[500px]"
+          />
         </section>
       </main>
       <ToastContainer />
