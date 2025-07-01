@@ -12,7 +12,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await fetch(`http://localhost:3000/api/auth`, {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -20,8 +20,6 @@ export const authOptions: AuthOptions = {
               senha: credentials?.password,
             }),
           });
-
-          console.log(res);
 
           if (!res.ok) {
             console.log(res);
