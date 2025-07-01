@@ -1,11 +1,15 @@
 "use client";
 
-import DeleteButton from "@/app/components/DeleteButton";
-import { deleteParticipant } from "@/app/services/participants";
+import {
+  deleteParticipant,
+  getParticipants,
+} from "@/app/services/participants";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CreateParticipantModal from "../CreateParticipantModal";
+import ParticipantListItem from "@/app/components/ParticipantListItem";
+import { LoadingSpinner } from "@/app/components/Loading";
 
 type FormProps = {
   initialParticipants: any[];
@@ -24,13 +28,26 @@ const Form = ({ initialParticipants }: FormProps) => {
     try {
       const result = await deleteParticipant(id, token);
       if (result.success) {
-        toast.success("Mentora apagada com sucesso!");
+        toast.success("Participante apagado com sucesso!");
         setParticipants((currentParticipants) =>
-          currentParticipants.filter((participant) => participant._id !== id),
+          currentParticipants.filter((participant) => participant._id !== id)
         );
       }
     } catch {
-      toast.error("Erro ao apagar mentora.");
+      toast.error("Erro ao apagar participante.");
+    }
+  };
+
+  const reloadParticipants = async () => {
+    if (!token) return;
+    setLoading(true);
+    try {
+      const updated = await getParticipants(token);
+      setParticipants(updated);
+    } catch {
+      toast.error("Erro ao recarregar participantes.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,27 +64,28 @@ const Form = ({ initialParticipants }: FormProps) => {
             Criar participante
           </button>
         </div>
-        <ul className="flex flex-col gap-[36px]">
-          {participants.map((participant) => (
-            <li
-              key={participant._id}
-              className="flex items-center justify-between"
-            >
-              <div className="flex flex-col text-black">
-                <p className="font-bold text-[20px]">{participant.nome}</p>
-                <p>{participant.email}</p>
-              </div>
-              <DeleteButton onClick={() => deleteUser(participant._id)} />
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <LoadingSpinner />
+          </div>
+        ) : (
+          <ul className="grid gap-6 mt-8">
+            {participants.map((participant) => (
+              <ParticipantListItem
+                key={participant._id}
+                participant={participant}
+                onDelete={deleteUser}
+              />
+            ))}
+          </ul>
+        )}
       </div>
       <CreateParticipantModal
         open={showCreateParticipantModal}
         close={() => setShowCreateParticipantModal(false)}
         onSuccess={() => {
           setShowCreateParticipantModal(false);
-          // TODO: Implement reload participants
+          reloadParticipants();
         }}
       />
     </>
