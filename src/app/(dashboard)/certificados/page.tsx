@@ -14,7 +14,7 @@ const Certificados = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(false);
   const form = useForm<{ nome: string; horas: number; projeto: string }>();
-  const { handleSubmit, formState: { errors }, reset, register } = form;
+  const { handleSubmit, formState: { errors }, register } = form;
 
   useEffect(() => {
     const fetchParticipants = async () => {
@@ -31,7 +31,6 @@ const Certificados = () => {
       const blob = await generateCertificate(data, session?.user?.token || "");
       const url = window.URL.createObjectURL(blob);
       window.open(url, '_blank');
-      reset();
     } catch (err) {
       console.log(err)
       toast.error("Não foi possível gerar o certificado. Tente novamente mais tarde.");
