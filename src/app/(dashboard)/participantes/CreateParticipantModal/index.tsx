@@ -7,18 +7,17 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { createParticipant } from '@/app/services/participants';
 
 const createParticipantSchema = yup.object().shape({
   name: yup
     .string()
     .required("Campo obrigatório")
     .min(2, "O campo deve ter no mínimo dois caracteres"),
-  age: yup
-    .number()
-    .typeError("O campo só aceita números")
+    dataNascimento: yup
+    .string()
     .required("Campo obrigatório")
-    .min(0, "Idade inválida")
-    .max(120, "Idade inválida"),
+    .min(2, "O campo deve ter no mínimo dois caracteres"),
   phone: yup.string().required("Campo obrigatório"),
   cpf: yup.string().required("Campo obrigatório"),
   rg: yup.string().required("Campo obrigatório"),
@@ -57,34 +56,30 @@ const CreateParticipantModal = ({
   const onSubmit = async (data: CreateParticipantForm) => {
     setLoading(true);
     try {
-      // TODO: Implement the API call to create participant
-      // const result = await createParticipant(
-      //   {
-      //     nome: data.name,
-      //     idade: data.age,
-      //     telefone: data.phone,
-      //     cpf: data.cpf,
-      //     rg: data.rg,
-      //     escola: data.school,
-      //     nomeResponsavel: data.guardianName,
-      //     telefoneResponsavel: data.guardianPhone,
-      //     emailResponsavel: data.guardianEmail,
-      //     cpfResponsavel: data.guardianCpf,
-      //     endereco: data.address,
-      //   },
-      //   token,
-      // );
+      const result = await createParticipant(
+        {
+          nome: data.name,
+          dataNascimento: data.dataNascimento,
+          telefone: data.phone,
+          cpf: data.cpf,
+          rg: data.rg,
+          escola: data.school,
+          nomeResponsavel: data.guardianName,
+          telefoneResponsavel: data.guardianPhone,
+          emailResponsavel: data.guardianEmail,
+          cpfResponsavel: data.guardianCpf,
+          endereco: data.address,
+        },
+        token,
+      );
 
-      // if (result.success) {
-      //   toast.success("Participante criado com sucesso!");
-      //   createParticipantForm.reset();
-      //   onSuccess();
-      // } else {
-      //   throw Error("Erro ao criar participante");
-      // }
-      toast.success("Participante criado com sucesso!");
-      createParticipantForm.reset();
-      onSuccess();
+      if (result.success) {
+        toast.success("Participante criado com sucesso!");
+        createParticipantForm.reset();
+        onSuccess();
+      } else {
+        throw Error("Erro ao criar participante");
+      }
     } catch {
       toast.error(
         "Não foi possível criar o participante. Tente novamente mais tarde.",
@@ -108,10 +103,9 @@ const CreateParticipantModal = ({
               error={errors.name && errors.name?.message}
             />
             <Input
-              type="number"
-              name="age"
-              placeholder="Idade"
-              error={errors.age && errors.age?.message}
+              name="dataNascimento"
+              placeholder="Data de nascimento"
+              error={errors.dataNascimento && errors.dataNascimento?.message}
             />
             <Input
               name="phone"
