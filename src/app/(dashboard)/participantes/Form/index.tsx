@@ -53,7 +53,7 @@ const Form = ({ initialParticipants }: FormProps) => {
 
   return (
     <>
-      <div className="pt-10">
+      <div className="pt-10 max-w-[1000px] mx-auto">
         <div className="flex items-center justify-between">
           <h1 className="text-black text-[42px] font-bold">Participantes</h1>
           <button
