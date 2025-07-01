@@ -48,17 +48,15 @@ const Sidebar = () => {
         />
         <nav>
           <ul className={listContainer()}>
-            {isAdmin && (
-              <li>
-                <SidebarLink
-                  active={isActive("participantes")}
-                  icon={<RiTeamLine />}
-                  href="/participantes"
-                >
-                  Participantes
-                </SidebarLink>
-              </li>
-            )}
+            <li>
+              <SidebarLink
+                active={isActive("participantes")}
+                icon={<RiTeamLine />}
+                href="/participantes"
+              >
+                Participantes
+              </SidebarLink>
+            </li>
             <li>
               <SidebarLink
                 active={isActive("certificados")}
@@ -66,15 +64,6 @@ const Sidebar = () => {
                 href="/certificados"
               >
                 Certificados
-              </SidebarLink>
-            </li>
-            <li>
-              <SidebarLink
-                active={isActive("cursos")}
-                icon={<RiGitRepositoryLine />}
-                href="/cursos"
-              >
-                Cursos
               </SidebarLink>
             </li>
           </ul>
