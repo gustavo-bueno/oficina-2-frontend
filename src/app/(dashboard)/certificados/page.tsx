@@ -3,17 +3,38 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import Input from "@/app/components/Input";
 import Button from "@/app/components/Button";
 import { getParticipants, Participant } from "@/app/services/participants";
 import { toast } from "react-toastify";
 import { generateCertificate } from "@/app/services/certificates";
 
+const validationSchema = yup.object({
+  nome: yup.string().required("Selecione um participante"),
+  projeto: yup.string().required("Nome do projeto é obrigatório").min(3, "Projeto deve ter pelo menos 3 caracteres"),
+  horas: yup.number().typeError("Horas devem ser um número")
+    .required("Horas são obrigatórias")
+    .positive("Horas devem ser um número positivo")
+    .integer("Horas devem ser um número inteiro")
+    .min(1, "Mínimo de 1 hora")
+});
+
+type FormData = yup.InferType<typeof validationSchema>;
+
 const Certificados = () => {
   const { data: session } = useSession();
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(false);
-  const form = useForm<{ nome: string; horas: number; projeto: string }>();
+  const form = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      nome: "",
+      projeto: "",
+      horas: undefined
+    }
+  });
   const { handleSubmit, formState: { errors }, register } = form;
 
   useEffect(() => {
@@ -25,7 +46,7 @@ const Certificados = () => {
     fetchParticipants();
   }, [session]);
 
-  const onSubmit = async (data: { nome: string; horas: number; projeto: string }) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
       const blob = await generateCertificate(data, session?.user?.token || "");
@@ -50,7 +71,9 @@ const Certificados = () => {
             <div>
               <select
                 {...register("nome", { required: "Selecione um participante" })}
-                className="h-[52px] w-full rounded-lg px-[16px] outline-primary py-[12px] text-black bg-input border border-gray-300"
+                className={`h-[52px] w-full rounded-lg px-[16px] border-none outline-primary py-[12px] text-black bg-input custom-select-arrow ${
+                  errors.nome ? "border-2 outline-red-500 border-red-500" : ""
+                }`}
                 defaultValue=""
               >
                 <option value="" disabled>

@@ -8,6 +8,7 @@ import {
   RiLogoutBoxRLine,
   RiTeamLine,
   RiMenuLine,
+  RiCloseLine,
 } from "@remixicon/react";
 import { usePathname } from "next/navigation";
 import sidebarLogo from "@/app/assets/img/logo-sidebar.png";
@@ -24,11 +25,12 @@ const button = tv({
     logo: "mb-5 mx-auto object-position-center",
     mobileOverlay: "fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden",
     mobileMenuButton: "lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg",
+    closeButton: "lg:hidden absolute top-4 right-4 p-2 text-gray-600 hover:text-gray-800 transition-colors",
   },
 });
 
 const Sidebar = () => {
-  const { container, listContainer, logo, mobileOverlay, mobileMenuButton } = button();
+  const { container, listContainer, logo, mobileOverlay, mobileMenuButton, closeButton } = button();
   const pathname = usePathname();
   const { data: session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -64,6 +66,13 @@ const Sidebar = () => {
       <aside className={container({
         className: isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       })}>
+        <button
+          className={closeButton()}
+          onClick={closeMobileMenu}
+          aria-label="Close menu"
+        >
+          <RiCloseLine className="w-6 h-6" />
+        </button>
         <div>
           <Image
             src={sidebarLogo}
