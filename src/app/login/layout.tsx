@@ -2,8 +2,8 @@ import ellpLogo from "@/app/assets/img/ellp-logo.png";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ToastContainer } from "react-toastify";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
  
 export default async function LoginLayout({
   children,

@@ -1,8 +1,8 @@
 import Sidebar from "../components/Sidebar";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { ToastContainer } from "react-toastify";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);

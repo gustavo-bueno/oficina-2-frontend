@@ -1,74 +1,50 @@
-# Frontend de Oficina de Integração 2 - ELLP UTFPR CP
+# Oficina 2 Frontend - ELLP UTFPR CP
+Sistema de gerenciamento de participantes e certificados para o ELLP UTFPR CP.
 
-Este é o frontend do projeto de Oficina de Integração 2, desenvolvido para o ELLP UTFPR CP.
-
-## 🚀 Tecnologias Utilizadas
+## 🛠️ Stack
 
 - Next.js 15.3.3
 - React 19
 - TypeScript
 - Tailwind CSS
 - NextAuth.js
-- React Hook Form
-- Jest para testes
-- ESLint para linting
+- React Hook Form + Yup
+- Jest
 
-## 📋 Pré-requisitos
+## ⚡ Setup
 
-- Node.js (versão LTS recomendada)
-- npm
-
-## 🔧 Instalação
-
-1. Instale as dependências:
+1. **Instalar dependências:**
 ```bash
 npm install
-# ou
-yarn install
 ```
 
-2. Crie o arquivo .env.local com os valores
-```
-NEXT_PUBLIC_API_URL=https://meninasdigitais.onrender.com
+2. **Configurar variáveis de ambiente:**
+```bash
+# .env.local
+NEXT_PUBLIC_API_URL=https://oficina2-1fkt.onrender.com
 NEXTAUTH_SECRET=T0K3NSUP3Rsecr3t0
 NEXTAUTH_URL=http://localhost:3000
 ```
 
-## 🏃‍♂️ Como Executar
-
-### Ambiente de Desenvolvimento
-Para rodar o projeto em modo de desenvolvimento:
-
+3. **Executar:**
 ```bash
 npm run dev
-# ou
-yarn dev
 ```
 
-O projeto estará disponível em `http://localhost:3000`
-
-```
+Acesse: `http://localhost:3000`
 
 ## 🧪 Testes
 
-O projeto utiliza Jest para testes. Você pode executar os testes de diferentes formas:
-
 ```bash
-# Executar todos os testes
-npm run test
-
-# Executar testes em modo watch
-npm run test:watch
-
-# Executar testes com cobertura
-npm run test:coverage
-
+npm run test          
+npm run test:watch    
+npm run test:coverage 
 ```
 
-## 📝 Linting
+## 📋 Funcionalidades
 
-Para verificar o código com ESLint:
-
-```bash
-npm run lint
-```
+- **Autenticação** com NextAuth.js
+- **Gerenciamento de participantes** (CRUD)
+- **Geração de certificados** em PDF
+- **Validação de formulários** com Yup
+- **Interface responsiva** com Tailwind CSS
